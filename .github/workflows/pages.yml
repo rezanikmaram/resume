@@ -1,0 +1,55 @@
+name: Deploy site
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Stamp asset version
+        run: |
+          set -euo pipefail
+          HASH=$(sha256sum assets/js/qr.min.js | cut -c1-8)
+          echo "qr.min.js hash: $HASH"
+          # Cache busting: every change to qr.min.js changes this query string,
+          # so browsers and the CDN cannot serve a stale copy.
+          sed -i -E "s#(assets/js/qr\.min\.js)\?v=[A-Za-z0-9._-]*#\1?v=$HASH#g" index.html
+          sed -i -E "s#data-version=\"[^\"]*\"#data-version=\"$HASH\"#" index.html
+          grep -n 'qr.min.js\|data-version' index.html
+
+      - name: Stage site
+        run: |
+          set -euo pipefail
+          mkdir -p _site
+          rsync -a --exclude '.git' --exclude '.github' --exclude '.vs' --exclude '_site' ./ _site/
+          ls -la _site
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - name: Deploy to GitHub Pages
+        id: deploy
+        uses: actions/deploy-pages@v4

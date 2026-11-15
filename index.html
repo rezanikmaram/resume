@@ -1,9 +1,21 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="fa" dir="rtl" data-version="dev">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>پلتفرم فروش آنلاین | افق رشد کسب‌وکار شما</title>
+<meta name="description" content="پلتفرم فروش آنلاین آماده برای هر صنعتی؛ راه‌اندازی سریع، طراحی سفارشی و پشتیبانی فنی تیمی با بیش از یک دهه تجربه.">
+<link rel="canonical" href="https://rezanikmaram.github.io/resume/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="پلتفرم فروش آنلاین">
+<meta property="og:url" content="https://rezanikmaram.github.io/resume/">
+<meta property="og:title" content="پلتفرم فروش آنلاین | افق رشد کسب‌وکار شما">
+<meta property="og:description" content="پلتفرم فروش آنلاین آماده برای هر صنعتی؛ راه‌اندازی سریع، طراحی سفارشی و پشتیبانی فنی تیمی با بیش از یک دهه تجربه.">
+<meta property="og:image" content="https://rezanikmaram.github.io/resume/assets/img/hero.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0a0a0f">
+<!-- سایت از ابتدا تیره است؛ ابزارهای «حالت تیره» نباید رنگ QR و تصاویر را عوض کنند -->
+<meta name="darkreader-lock">
 <style>
   @font-face {
     font-family: 'Vazirmatn';
@@ -90,9 +102,34 @@
     font-size: 0.92rem;
     font-weight: 700;
     white-space: nowrap;
+    flex: none;
     transition: opacity 0.25s;
   }
   .nav-phone:hover { opacity: 0.8; }
+
+  /* ---------- NAV: QR / SHARE ---------- */
+  .nav-qr {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 15px;
+    border: 1px solid rgba(212,175,55,0.45);
+    border-radius: 999px;
+    background: rgba(212,175,55,0.08);
+    color: var(--gold);
+    font: inherit;
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 1.4;
+    white-space: nowrap;
+    flex: none;
+    cursor: pointer;
+    transition: background 0.25s, border-color 0.25s, transform 0.15s;
+  }
+  .nav-qr svg { width: 18px; height: 18px; flex: none; }
+  .nav-qr:hover { background: rgba(212,175,55,0.16); border-color: var(--gold); }
+  .nav-qr:active { transform: scale(0.97); }
+  .nav-qr:focus-visible { outline: 2px solid var(--gold-light); outline-offset: 3px; }
 
   /* ---------- HERO ---------- */
   .hero {
@@ -585,6 +622,122 @@
     border-top: 1px solid #16161f;
   }
 
+  /* ---------- QR MODAL ---------- */
+  dialog.qr-modal {
+    width: min(92vw, 400px);
+    max-height: min(90dvh, 660px);
+    overflow: auto;
+    margin: auto;
+    padding: 24px 22px 20px;
+    border: 1px solid rgba(212,175,55,0.35);
+    border-radius: 22px;
+    background: linear-gradient(180deg, #15151f 0%, #0c0c13 100%);
+    color: var(--text);
+    text-align: center;
+    box-shadow: 0 30px 90px rgba(0,0,0,0.75), inset 0 1px 0 rgba(255,255,255,0.04);
+  }
+  dialog.qr-modal::backdrop {
+    background: rgba(4,4,8,0.78);
+    backdrop-filter: blur(6px);
+  }
+  dialog.qr-modal[open] { animation: qr-pop 0.24s cubic-bezier(0.2, 0.9, 0.3, 1); }
+  @keyframes qr-pop {
+    from { opacity: 0; transform: translateY(14px) scale(0.97); }
+    to { opacity: 1; transform: none; }
+  }
+  body:has(dialog.qr-modal[open]) { overflow: hidden; }
+
+  .qr-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .qr-head h2 { font-size: 1.12rem; font-weight: 800; margin: 0; line-height: 1.6; }
+  .qr-close {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.04);
+    color: var(--muted);
+    font: inherit;
+    font-size: 1.25rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: color 0.2s, background 0.2s;
+  }
+  .qr-close:hover { color: var(--text); background: rgba(255,255,255,0.1); }
+  .qr-sub { color: var(--muted); font-size: 0.86rem; margin: 8px 0 18px; }
+  .qr-plate {
+    background: #fff;
+    /* در حالت «تیره‌ی خودکار» مرورگر و High Contrast نباید QR را رنگ‌آمیزی کند */
+    color-scheme: light;
+    forced-color-adjust: none;
+    border-radius: 16px;
+    padding: 14px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+  }
+  .qr-plate img {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+  .qr-url {
+    display: block;
+    margin: 16px 0 18px;
+    color: var(--gold-light);
+    font-size: 0.82rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    text-decoration: none;
+    word-break: break-all;
+    direction: ltr;
+    text-align: center;
+  }
+  .qr-url:hover { text-decoration: underline; }
+  .qr-actions { display: flex; gap: 10px; }
+  .qr-btn {
+    flex: 1;
+    padding: 12px 10px;
+    border: 1px solid rgba(255,255,255,0.14);
+    border-radius: 12px;
+    background: rgba(255,255,255,0.05);
+    color: var(--text);
+    font: inherit;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s, transform 0.12s;
+  }
+  .qr-btn:hover { background: rgba(255,255,255,0.1); }
+  .qr-btn:active { transform: scale(0.98); }
+  .qr-btn-primary {
+    border-color: transparent;
+    background: linear-gradient(135deg, var(--gold), #b8912b);
+    color: #14140f;
+    font-weight: 800;
+  }
+  .qr-btn-primary:hover { background: linear-gradient(135deg, var(--gold-light), var(--gold)); }
+  .qr-btn:focus-visible, .qr-close:focus-visible { outline: 2px solid var(--gold-light); outline-offset: 2px; }
+  .qr-toast {
+    min-height: 22px;
+    margin-top: 10px;
+    font-size: 0.82rem;
+    color: var(--gold-light);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .qr-toast.show { opacity: 1; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    dialog.qr-modal[open] { animation: none; }
+    .nav-qr:active, .qr-btn:active { transform: none; }
+  }
+
   /* ---------- RESPONSIVE ---------- */
   @media (max-width: 900px) {
     .horizon-grid, .team-grid { grid-template-columns: 1fr; gap: 40px; }
@@ -592,9 +745,19 @@
   }
   @media (max-width: 768px) {
     nav ul { display: none; }
+    .nav-menu { gap: 16px; }
+    .nav-qr { padding: 8px; }
+    .nav-qr span { display: none; }
     .hero { padding-top: 120px; }
     section { padding: 80px 6%; }
     .team-stats { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 420px) {
+    nav { padding-left: 4%; padding-right: 4%; }
+    .logo { font-size: 1.05rem; }
+    .nav-menu { gap: 12px; }
+    .nav-phone { font-size: 0.75rem; }
+    dialog.qr-modal { padding: 20px 16px 16px; }
   }
 </style>
 </head>
@@ -611,6 +774,23 @@
       <li><a href="#stores">نمونه‌ها</a></li>
     </ul>
     <a href="tel:09012044200" class="nav-phone">📞 ۰۹۰۱۲۰۴۴۲۰۰</a>
+    <button type="button" class="nav-qr" id="qrBtn" aria-haspopup="dialog" aria-controls="qrModal" title="نمایش کد QR و اشتراک‌گذاری آدرس سایت">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+        <rect width="5" height="5" x="3" y="3" rx="1"/>
+        <rect width="5" height="5" x="16" y="3" rx="1"/>
+        <rect width="5" height="5" x="3" y="16" rx="1"/>
+        <path d="M21 16h-3a2 2 0 0 0-2 2v3"/>
+        <path d="M21 21v.01"/>
+        <path d="M12 7v3a2 2 0 0 1-2 2H7"/>
+        <path d="M3 12h.01"/>
+        <path d="M12 3h.01"/>
+        <path d="M12 16v.01"/>
+        <path d="M16 12h1"/>
+        <path d="M21 12v.01"/>
+        <path d="M12 21v-1"/>
+      </svg>
+      <span>اشتراک</span>
+    </button>
   </div>
 </nav>
 
@@ -862,10 +1042,176 @@
   </div>
 </section>
 
+<!-- QR / SHARE MODAL -->
+<dialog class="qr-modal" id="qrModal" aria-labelledby="qrTitle">
+  <div class="qr-head">
+    <h2 id="qrTitle">اسکن کنید و وارد سایت شوید</h2>
+    <button type="button" class="qr-close" id="qrClose" aria-label="بستن">&times;</button>
+  </div>
+  <p class="qr-sub">دوربین گوشی را روی کد QR بگیرید تا همین صفحه باز شود.</p>
+  <div class="qr-plate" id="qrPlate"></div>
+  <a class="qr-url" id="qrUrl" href="https://rezanikmaram.github.io/resume/" target="_blank" rel="noopener">https://rezanikmaram.github.io/resume/</a>
+  <div class="qr-actions">
+    <button type="button" class="qr-btn qr-btn-primary" id="qrShare">اشتراک‌گذاری</button>
+    <button type="button" class="qr-btn" id="qrCopy">کپی لینک</button>
+  </div>
+  <p class="qr-toast" id="qrToast" role="status" aria-live="polite"></p>
+</dialog>
+
 <!-- FOOTER -->
 <footer>
     © ۱۴۰۵ — پلتفرم فروش آنلاین. تمامی حقوق محفوظ است.
 </footer>
+
+<script src="assets/js/qr.min.js?v=dev" defer></script>
+<script>
+(function () {
+  'use strict';
+
+  var FALLBACK_URL = 'https://rezanikmaram.github.io/resume/';
+  var canonical = document.querySelector('link[rel="canonical"]');
+  var loc = window.location;
+
+  // آدرس واقعی سایت: روی دامنه‌ی اصلی همان چیزی که مرورگر باز کرده،
+  // و روی localhost/file همان آدرس منتشرشده (تا QR اشتباه ندهد).
+  function resolveUrl() {
+    var isLocal = loc.protocol === 'file:' ||
+      /^(localhost|127\.\d+\.\d+\.\d+|0\.0\.0\.0|\[::1\])$/i.test(loc.hostname);
+    if (!isLocal && /^https?:$/.test(loc.protocol)) {
+      return loc.origin + loc.pathname.replace(/index\.html?$/i, '');
+    }
+    return (canonical && canonical.href) || FALLBACK_URL;
+  }
+
+  var url = resolveUrl();
+
+  var qrBtn = document.getElementById('qrBtn');
+  var modal = document.getElementById('qrModal');
+  var plate = document.getElementById('qrPlate');
+  var urlLink = document.getElementById('qrUrl');
+  var shareBtn = document.getElementById('qrShare');
+  var copyBtn = document.getElementById('qrCopy');
+  var closeBtn = document.getElementById('qrClose');
+  var toastEl = document.getElementById('qrToast');
+
+  if (!qrBtn || !modal || !plate) return;
+
+  urlLink.textContent = url;
+  urlLink.href = url;
+
+  var built = false;
+  var toastTimer;
+
+  function buildQr() {
+    if (built) return;
+    if (typeof window.qrcode !== 'function') {
+      plate.textContent = 'ساخت کد QR ممکن نشد؛ از دکمه‌ی «کپی لینک» استفاده کنید.';
+      return;
+    }
+    var qr = window.qrcode(0, 'M');
+    qr.addData(url);
+    qr.make();
+    var svg = qr.createSvgTag({
+      cellSize: 8,
+      margin: 32, // حاشیه‌ی سفید = ۴ ماژول (الزام استاندارد برای اسکن مطمئن)
+      alt: 'کد QR آدرس سایت'
+    }).replace('fill="black"', 'fill="#0a0a0f"');
+
+    // به‌صورت <img> درج می‌شود، نه SVG داخلی صفحه؛
+    // این‌طور افزونه‌های حالت تیره و ابزارهای High Contrast رنگ کد را عوض نمی‌کنند.
+    var img = document.createElement('img');
+    img.alt = 'کد QR آدرس ' + url;
+    img.decoding = 'async';
+    img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+    plate.textContent = '';
+    plate.appendChild(img);
+    built = true;
+  }
+
+  function openModal() {
+    buildQr();
+    if (typeof modal.showModal === 'function') {
+      if (!modal.open) modal.showModal();
+    } else {
+      modal.setAttribute('open', '');
+    }
+  }
+
+  function closeModal() {
+    if (typeof modal.close === 'function') modal.close();
+    else modal.removeAttribute('open');
+  }
+
+  function toast(msg) {
+    toastEl.textContent = msg;
+    toastEl.classList.add('show');
+    window.clearTimeout(toastTimer);
+    toastTimer = window.setTimeout(function () {
+      toastEl.classList.remove('show');
+      toastEl.textContent = '';
+    }, 2600);
+  }
+
+  function copyFallback() {
+    var ta = document.createElement('textarea');
+    ta.value = url;
+    ta.setAttribute('readonly', '');
+    ta.style.position = 'fixed';
+    ta.style.top = '-1000px';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    var ok = false;
+    try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+    document.body.removeChild(ta);
+    return ok;
+  }
+
+  function copyLink() {
+    var done = function () { toast('لینک کپی شد ✓'); };
+    var failed = function () {
+      toast(copyFallback() ? 'لینک کپی شد ✓' : 'کپی نشد؛ آدرس را دستی انتخاب کنید.');
+    };
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(url).then(done, failed);
+    }
+    failed();
+    return Promise.resolve();
+  }
+
+  function shareLink() {
+    if (navigator.share) {
+      navigator.share({ title: document.title, url: url }).then(function () {
+        toast('اشتراک‌گذاری انجام شد ✓');
+      }, function (err) {
+        if (err && err.name === 'AbortError') return;
+        copyLink();
+      });
+    } else {
+      copyLink();
+    }
+  }
+
+  qrBtn.addEventListener('click', openModal);
+  closeBtn.addEventListener('click', closeModal);
+  copyBtn.addEventListener('click', copyLink);
+  shareBtn.addEventListener('click', shareLink);
+
+  // بستن با کلیک روی پس‌زمینه (کلیک روی خود dialog)
+  modal.addEventListener('click', function (e) {
+    if (e.target === modal) closeModal();
+  });
+
+  var qrScript = document.querySelector('script[src*="qr.min.js"]');
+  if (qrScript) {
+    var version = '';
+    try { version = new URL(qrScript.src, loc.href).searchParams.get('v') || ''; } catch (e) {}
+    console.log('[resume] qr.min.js v=' + version +
+      ' | page=' + (document.documentElement.getAttribute('data-version') || 'dev') +
+      ' | qr=' + url);
+  }
+})();
+</script>
 
 </body>
 </html>
